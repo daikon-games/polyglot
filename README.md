@@ -1,5 +1,5 @@
 # polyglot
-![banner graphic](images/banner.png)
+![banner graphic](banner.png)
 
 Polyglot is a library for GameMaker Studio 2.3+ for loading localized strings easily and efficiently.
 

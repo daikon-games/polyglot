@@ -1,4 +1,6 @@
 # polyglot
+![banner graphic](images/banner.png)
+
 Polyglot is a library for GameMaker Studio 2.3+ for loading localized strings easily and efficiently.
 
 #### Table of Contents
@@ -11,7 +13,7 @@ Polyglot is a library for GameMaker Studio 2.3+ for loading localized strings ea
 
 Integrating Polyglot into your project is simple: just [download the latest release](https://github.com/daikon-games/polyglot/releases), and then in GameMaker Studio click on the **Tools** menu and select **Import Local Package**. Choose the `.yymps` file you downloaded, and import all assets.
 
-Alternatively you can install polyglot from the [Game Maker Marketplace]() (coming soon).
+Alternatively you can install polyglot from the [Game Maker Marketplace](https://marketplace.yoyogames.com/assets/10472/polyglot).
 
 The `obj_polyglot` object is persistent, so you only need to include or create it once.
 There isn't much configuration needed for Polyglot, by default its locale is set to `en_US`, and its work memory cache stores 100 strings.

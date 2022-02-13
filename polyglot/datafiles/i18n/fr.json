@@ -1,11 +1,11 @@
 {
     "general": {
         "greeting": "Bonjour monde! Je suis polyglot",
-        "lang-count__zero": "You have not switched languages",
-        "lang-count__one": "You have switched languages once",
-        "lang-count__plural": "You have switched languages {count} times"
+        "swap-count__zero": "Vous n'avez pas changé de langue",
+        "swap-count__one": "Vous avez changé de langue une fois",
+        "swap-count__plural": "You have switched Vous avez changé de langue {count} fois"
     },
     "menu": {
-        "set-locale": "Choisissez une Region"
+        "set-locale": "Choisissez une Région"
     }
 }

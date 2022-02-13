@@ -11,3 +11,5 @@ locales = ["en", "es", "fr"];
 
 currentBgColor = c_black;
 bgBlendAmt = 0;
+
+swaps = 0;

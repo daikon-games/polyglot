@@ -15,12 +15,15 @@ for (var i = 1; i <= stringCharCount; i++) {
 	draw_text(screen_center_x + xOffset, screen_center_y + yOffset, char);
 }
 
+draw_set_font (font_menu);
+draw_text(screen_center_x, 20, str("general.swap-count", {count: swaps}));
+
 draw_set_halign(fa_left);
 
-draw_set_font(font_menu);
 draw_text(10, 250, str("menu.set-locale"));
 for (var i = 0; i < array_length(locales); i++) {
 	var pressed = (obj_polyglot._currLocale == locales[i])
 	draw_sprite_stretched(pressed ? spr_button_pressed : spr_button, 0, 10 + (i * 50), 265, 45, 20);
 	draw_text(18 + (i * 50), 272, locales[i]);
 }
+

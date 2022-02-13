@@ -55,10 +55,40 @@ function _string_lookup(stringKey, data = {}) {
 	
 	// Now our work struct should be at it's deepest point,
 	// and our remaining key path part should be in this struct with our localized string
-	if (!variable_struct_exists(workStruct, keyPathParts[0])) return _undef;
-	var finalString = variable_struct_get(workStruct,  keyPathParts[0]);
+	var finalString = _undef;
+	if (!variable_struct_exists(workStruct, keyPathParts[0])) {
+		// If there is not a lookup for our exact key, it may be a pluralizable string
+		// if we have interpolation data named "count", check for our pluralized keys instead
+		if (variable_struct_exists(data, "count")) {
+			var count = variable_struct_get(data, "count");
+			if (is_numeric(count)) {
+				var zeroString = keyPathParts[0] + "__zero";
+				var oneString = keyPathParts[0] + "__one";
+				var pluralString = keyPathParts[0] + "__plural";
+				
+				if (count == 0 && variable_struct_exists(workStruct, zeroString)) {
+					finalString = variable_struct_get(workStruct, zeroString);
+				} else if (count == 1 && variable_struct_exists(workStruct, oneString)) {
+					finalString = variable_struct_get(workStruct, oneString);
+				} else if (variable_struct_exists(workStruct, pluralString)) {
+					finalString = variable_struct_get(workStruct, pluralString);
+				}
+			}
+		}
+	} else {
+		// The lookup key is found exactly as-is in our file so just grab its value
+		finalString = variable_struct_get(workStruct,  keyPathParts[0]);
+	}
 	if (!is_string(finalString)) return _undef;
-	// TODO interpolation
+	
+	// If we have any data to interpolate, do it
+	var dataKeys = variable_struct_get_names(data);
+	for (var i = 0; i < array_length(dataKeys); i++) {
+		var key = dataKeys[i];
+		var value = variable_struct_get(data, key);
+		
+		finalString = string_replace_all(finalString, "{"+key+"}", value);
+	}
 	return finalString;
 }
 
@@ -88,6 +118,8 @@ function _string_split(_input, _delimiter) {
 
 	return splits;
 }
+
+
 
 // Load our default locale's language data
 self._loadStringData();

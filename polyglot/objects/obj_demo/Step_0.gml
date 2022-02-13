@@ -1,4 +1,4 @@
-msg = obj_polyglot.str("general", "greeting");
+msg = str("general.greeting");
 waveFrame = (waveFrame + 1) % waveFrames;
 
 for (var i = 0; i < array_length(locales); i++) {

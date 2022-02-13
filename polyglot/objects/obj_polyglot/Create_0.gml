@@ -1,48 +1,93 @@
-_workMemory = ds_map_create();
-_currLocale = "en_US";
+/// @description Initalize Polyglot
+_currLocale = defaultLocale;
+_stringData = {};
 
 _undef = "ERROR: NO LOCALIZED STRING";
 
 // If another instance of polyglot already exists, destroy ourself
-// Must do after initializing work memory so our clean-up step succeeds
 if (instance_number(object_index) > 1) {
 	instance_destroy();
 }
 
-/// @function str(section, key)
-/// @param section The section of the ini file to read a string from
-/// @param key The key of the string whose localized value to read
-/// @description Returns the localized string value for a given section and key, 
-///				 for the currently set locale
-function str(section, key) {
-	var cacheKey = section + ":" + key;
-	if (!is_undefined(_workMemory[?cacheKey])) {
-		// If we have the value of this string cached, 
-		// return it rather than re-opening the ini file
-		return _workMemory[?cacheKey];
-	} else {
-		// Open the correct i18n file and read the value
-		ini_open("i18n/" + _currLocale + ".ini");
-		result = ini_read_string(section, key, _undef);
-		ini_close();
-		
-		if (ds_map_size(_workMemory) >= _workMemorySize) {
-			// If our cache is full, delete a random item (ds_maps are not ordered)
-			// before storing the new string
-			ds_map_delete(_workMemory, ds_map_find_first(_workMemory));
+/// @function setLocale(locale)
+/// @param locale The new locale to set
+/// @description Changes the current locale
+function setLocale(locale) {
+	_currLocale = locale;
+	_loadStringData();
+}
+
+// Internal function, reads the current locale's JSON data file into working memory
+function _loadStringData() {
+	var langFile = file_text_open_read("i18n/" + _currLocale + ".json");
+	if (langFile != -1) {
+		var data = "";
+		while (!file_text_eof(langFile)) {
+		    data += file_text_read_string(langFile);
+		    file_text_readln(langFile);
 		}
+		file_text_close(langFile);
 		
-		// Cache the value in our work memory
-		_workMemory[?cacheKey] = result;
-		
-		return result;
+		_stringData = json_parse(data);
+	} else {
+		throw "Language file: " + "i18n/" + _currLocale + ".json could not be read or does not exist";
 	}
 }
 
-/// @function setLocale(locale)
-/// @param locale The new locale to set
-/// @description Changes the current locale, and clears the working memory
-function setLocale(locale) {
-	_currLocale = locale;
-	ds_map_clear(_workMemory)
+// Internal function, looks up a localized string by its key and uses the interpolation data if any
+function _string_lookup(stringKey, data = {}) {
+	// Split our string key on dots, to try and follow the JSON structure down
+	var keyPathParts = self._string_split(stringKey, ".");
+	if (array_length(keyPathParts) == 0) throw "Error: Invalid string lookup key";
+	
+	// iterate down our key path & JSON data structure to find the deepest level
+	var workStruct = _stringData;
+	while (array_length(keyPathParts) > 1) {
+		// "pop" the first level of the key path
+		var sectionKey = keyPathParts[0];
+		array_delete(keyPathParts, 0, 1);
+		// try to dive deeper in the work struct
+		if (!variable_struct_exists(workStruct, sectionKey)) return _undef;
+		var nextLevel = variable_struct_get(workStruct, sectionKey);
+		if (!is_struct(nextLevel)) return _undef;
+		workStruct = nextLevel;
+	}
+	
+	// Now our work struct should be at it's deepest point,
+	// and our remaining key path part should be in this struct with our localized string
+	if (!variable_struct_exists(workStruct, keyPathParts[0])) return _undef;
+	var finalString = variable_struct_get(workStruct,  keyPathParts[0]);
+	if (!is_string(finalString)) return _undef;
+	// TODO interpolation
+	return finalString;
 }
+
+// Graciously borrowed from here: https://www.reddit.com/r/gamemaker/comments/3zxota/splitting_strings/
+function _string_split(_input, _delimiter) {
+	var slot = 0;
+	var splits = []; //array to hold all splits
+	var str2 = ""; //var to hold the current split we're working on building
+
+	for (var i = 1; i < (string_length(_input) + 1); i++) {
+	    var currStr = string_char_at(_input, i);
+	    if (currStr == _delimiter) {
+			if (str2 != "") { // Make sure we don't include the _delimiter
+		        splits[slot] = str2; //add this split to the array of all splits
+		        slot++;
+			}
+	        str2 = "";
+	    } else {
+	        str2 = str2 + currStr;
+	        splits[slot] = str2;
+	    }
+	}
+	// If we ended on our delimiter character, include an empty string as the final split
+	if (str2 == "") {
+		splits[slot] = str2;
+	}
+
+	return splits;
+}
+
+// Load our default locale's language data
+self._loadStringData();

@@ -7,7 +7,7 @@ baseWaveFrames = 200;
 
 msg = "";
 
-locales = ["en_US", "en_GB", "fr_FR", "es_ES"];
+locales = ["en", "es", "fr"];
 
 currentBgColor = c_black;
 bgBlendAmt = 0;

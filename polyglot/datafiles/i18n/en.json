@@ -1,0 +1,11 @@
+{
+    "general": {
+        "greeting": "Hello world! I'm polyglot",
+        "lang-count__zero": "You have not switched languages",
+        "lang-count__one": "You have switched languages once",
+        "lang-count__plural": "You have switched languages {count} times"
+    },
+    "menu": {
+        "set-locale": "Set Locale"
+    }
+}

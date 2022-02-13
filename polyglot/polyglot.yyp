@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"scr_polyglot","path":"scripts/scr_polyglot/scr_polyglot.yy",},"order":0,},
     {"id":{"name":"font_menu","path":"fonts/font_menu/font_menu.yy",},"order":1,},
     {"id":{"name":"obj_polyglot","path":"objects/obj_polyglot/obj_polyglot.yy",},"order":0,},
     {"id":{"name":"obj_demo","path":"objects/obj_demo/obj_demo.yy",},"order":1,},
@@ -17,7 +18,6 @@
   ],
   "isDnDProject": false,
   "isEcma": false,
-  "tutorialPath": "",
   "configs": {
     "name": "Default",
     "children": [],
@@ -39,13 +39,12 @@
     {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,"resourceVersion":"1.3","name":"Default","resourceType":"GMTextureGroup",},
   ],
   "IncludedFiles": [
-    {"CopyToMask":-1,"filePath":"datafiles/i18n","resourceVersion":"1.0","name":"en_US.ini","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/i18n","resourceVersion":"1.0","name":"en_GB.ini","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/i18n","resourceVersion":"1.0","name":"fr_FR.ini","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/i18n","resourceVersion":"1.0","name":"es_ES.ini","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/i18n","resourceVersion":"1.0","name":"en.json","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/i18n","resourceVersion":"1.0","name":"es.json","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/i18n","resourceVersion":"1.0","name":"fr.json","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "2.3.7.603",
+    "IDEVersion": "2022.1.0.609",
   },
   "resourceVersion": "1.4",
   "name": "polyglot",

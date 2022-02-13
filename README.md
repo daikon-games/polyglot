@@ -1,7 +1,7 @@
 # polyglot
 ![banner graphic](banner.png)
 
-Polyglot is a library for GameMaker Studio 2.3+ for loading localized strings easily and efficiently.
+Polyglot is a library for modern GameMaker Studio projects for loading localized strings easily and efficiently.
 
 #### Table of Contents
 * [Setup](#setup)

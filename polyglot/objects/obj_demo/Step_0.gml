@@ -1,4 +1,4 @@
-msg = obj_polyglot.str("general", "greeting");
+msg = str("general.greeting");
 waveFrame = (waveFrame + 1) % waveFrames;
 
 for (var i = 0; i < array_length(locales); i++) {
@@ -19,6 +19,7 @@ for (var i = 0; i < array_length(locales); i++) {
 					make_color_rgb(12, 201, 50),
 					make_color_rgb(120, 55, 148));
 		bgBlendAmt = 0;
+		swaps += 1;
 	}
 }
 

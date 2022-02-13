@@ -1,0 +1,11 @@
+{
+    "general": {
+        "greeting": "안녕하세요 세상아! 저는 polyglot 입니다",
+        "swap-count__zero": "언어가 바꾸지 않았습니다",
+        "swap-count__one": "언어가 한 번 변경되었습니다.",
+        "swap-count__plural": "언어가 {count}번 변경되었습니다."
+    },
+    "menu": {
+        "set-locale": "지역 설정"
+    }
+}

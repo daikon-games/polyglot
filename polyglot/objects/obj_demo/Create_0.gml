@@ -7,9 +7,21 @@ baseWaveFrames = 200;
 
 msg = "";
 
-locales = ["en", "es", "fr"];
+locales = ["en", "es", "fr", "kr"];
+fonts = {
+	def: {menu: font_menu, demo: font_demo},
+	kr: {menu: font_menu_kr, demo: font_demo_kr}
+}
 
 currentBgColor = c_black;
 bgBlendAmt = 0;
 
 swaps = 0;
+
+function fontSet() {
+	if (obj_polyglot.getLocale() == "kr") {
+		return fonts.kr;
+	} else {
+		return fonts.def;
+	}
+}

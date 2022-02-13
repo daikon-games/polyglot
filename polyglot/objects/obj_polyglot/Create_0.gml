@@ -17,6 +17,12 @@ function setLocale(locale) {
 	_loadStringData();
 }
 
+/// @function getLocale()
+/// @description Returns the current locale
+function getLocale() {
+	return _currLocale;
+}
+
 // Internal function, reads the current locale's JSON data file into working memory
 function _loadStringData() {
 	var langFile = file_text_open_read("i18n/" + _currLocale + ".json");
@@ -66,8 +72,13 @@ function _string_lookup(stringKey, data = {}) {
 				var oneString = keyPathParts[0] + "__one";
 				var pluralString = keyPathParts[0] + "__plural";
 				
-				if (count == 0 && variable_struct_exists(workStruct, zeroString)) {
-					finalString = variable_struct_get(workStruct, zeroString);
+				if (count == 0) {
+					if (variable_struct_exists(workStruct, zeroString)) {
+						finalString = variable_struct_get(workStruct, zeroString);
+					} else if (variable_struct_exists(workStruct, pluralString)) {
+						// The zero case can just use the plural string if no special zero string is specified
+						finalString = variable_struct_get(workStruct, pluralString);
+					}
 				} else if (count == 1 && variable_struct_exists(workStruct, oneString)) {
 					finalString = variable_struct_get(workStruct, oneString);
 				} else if (variable_struct_exists(workStruct, pluralString)) {

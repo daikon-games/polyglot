@@ -100,6 +100,40 @@ function _string_lookup(stringKey, data = {}) {
 		
 		finalString = string_replace_all(finalString, "{"+key+"}", value);
 	}
+	
+	// Only perform nesting if string contains any str()
+	if (string_pos("str(", finalString) != 0) {
+		var nestingKey = "";
+		var parsingToken = false;
+		var replacements = [];
+		// Find any nested tokens, of the form "str(nestedKey)"
+		for (var i = 0; i < string_length(finalString); i++) {
+			if (!parsingToken) {
+				// GameMaker string functions are 1-indexed, so add 1 to i...
+				var next4 = string_copy(finalString, i + 1, 4);
+				if (next4 == "str(") {
+					parsingToken = true;
+					i += 3;
+				}
+			} else {
+				if (string_char_at(finalString, i + 1) == ")") {
+					// call ourselves recursively to look up the nested string key
+					var nested = _string_lookup(nestingKey, data);
+					array_push(replacements, {_key: "str("+nestingKey+")", _value: nested});
+					nestingKey = "";
+					parsingToken = false;
+				} else {
+					nestingKey += string_char_at(finalString, i + 1);
+				}
+			}
+		}
+		// Replace any nested tokens found with their looked-up values
+		for (var i = 0; i < array_length(replacements); i++) {
+			var replacement = replacements[i];
+			finalString = string_replace(finalString, replacement._key, replacement._value);
+		}
+	}
+		
 	return finalString;
 }
 

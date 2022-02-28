@@ -1,6 +1,7 @@
 {
     "general": {
-        "greeting": "Bonjour monde! Je suis polyglot",
+        "name": "polyglot",
+        "greeting": "Bonjour monde! Je suis str(general.name)",
         "swap-count__zero": "Vous n'avez pas changé de langue",
         "swap-count__one": "Vous avez changé de langue une fois",
         "swap-count__plural": "You have switched Vous avez changé de langue {count} fois"

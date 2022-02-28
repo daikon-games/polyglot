@@ -97,7 +97,7 @@ Note that we only include `score` as the string key. polyglot will automatically
 {
     "failures__zero": "Perfect run so far!",
     "failures__one": "One little mistake...",
-    "failures_plural": "You have failed {count} times"
+    "failures__plural": "You have failed {count} times"
 }
 ```
 

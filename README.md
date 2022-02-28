@@ -6,6 +6,11 @@ Polyglot is a library for modern GameMaker Studio projects for loading localized
 #### Table of Contents
 * [Setup](#setup)
 * [Usage](#usage)
+    * [str](#str)
+        * [Interpolation and Pluralization](#interpolation-and-pluralization)
+        * [Nesting](#nesting)
+    * [setLocale](#setlocale)
+    * [getLocale](#getlocale)
 * [Licensing](#licensing)
 * [Attribution](#attribution)
 
@@ -95,6 +100,37 @@ Note that we only include `score` as the string key. polyglot will automatically
     "failures_plural": "You have failed {count} times"
 }
 ```
+
+#### Nesting
+
+One more useful feature of polyglot is the ability to nest string lookups. Take a look at this example language file:
+
+```
+{
+    "characterNames": {
+        "oldMan": "Old Man"
+    },
+    "dialog": {
+        "greet-elder": "Hey there str(characterNames.oldMan)!"
+    }
+}
+```
+
+You may already be able to see where this is going. If we call `str`:
+
+```
+str("dialog.greet-elder")
+```
+
+The string that is returned is
+
+```
+Hey there Old Man!
+```
+
+This can be useful for a number of reasons, but primarily if we were to change the value of `characterNames.oldMan`, every single string that references it would be updated as well. The nested string keys in the language file have to follow the specific form `str(nestedKeyPath)` where `nestedKeyPath` is a dotted json lookup path such as `characterNames.oldMan` as you see in the example above.
+
+A note, the interpolation data is passed down to the nested string lookups, so if your nested string also has variable data markers, they will be replaced using the same values as the overall string.
 
 ### setLocale
 

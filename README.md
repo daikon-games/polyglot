@@ -20,7 +20,7 @@ Integrating Polyglot into your project is simple: just [download the latest rele
 
 Alternatively you can install polyglot from the [Game Maker Marketplace](https://marketplace.yoyogames.com/assets/10472/polyglot).
 
-If your game will use a locale named `en` (used for English language by default) then absolutely no configuration is required! If not, you will just need to drop an instance of `obj_polyglot` into a room in your game somewhere and change the variable `defaultLocale` to one that you plan to use.
+If your game will use a locale named `en` (used for English language by default) then absolutely no configuration is required! If not, you will just need to call `set_locale(locale)` in your project's initialization code.
 
 You will need to create `.json` files in a directory called `i18n` in your game's "Included Files" directory. Each `.json` file will contain all of the strings for a given locale.
 
@@ -32,11 +32,9 @@ Polyglot exposes the following functions for you to use:
 
 ```
 str(stringKey, [data])
-obj_polyglot.setLocale(locale)
-obj_polyglot.getLocale()
+set_locale(locale)
+current_locale()
 ```
-
-Note that `str` is not a method of `obj_polyglot` but rather provided by the script file `scr_polyglot` for more convenience.
 
 Let's quickly discuss each:
 
@@ -132,21 +130,21 @@ This can be useful for a number of reasons, but primarily if we were to change t
 
 A note, the interpolation data is passed down to the nested string lookups, so if your nested string also has variable data markers, they will be replaced using the same values as the overall string.
 
-### setLocale
+### set_locale
 
 This method's purpose is to change the current locale. Polyglot doesn't have any hard requirements for the names of the locales,
 just that they must be strings, and that the `.json` files you create must have the exact names of the locale you set Polyglot to use.
 
-To change the locale, simple call `setLocale` like so:
+To change the locale, simple call `set_locale` like so:
 ```
-obj_polyglot.setLocale("es");
+set_locale("es");
 ```
 
-### getLocale
+### current_locale
 
 polyglot also includes a method for fetching the currently set locale.
 ```
-obj_polyglot.getLocale()
+current_locale()
 ```
 Which would return the string `en`, or `es`, or whatever the locale is currently set to.
 

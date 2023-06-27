@@ -11,7 +11,7 @@ for (var i = 0; i < array_length(locales); i++) {
 	if (_mouseX > x1 && _mouseX < x2 &&
 		_mouseY > y1 && _mouseY < y2 &&
 		mouse_check_button_pressed(mb_left)) {
-		obj_polyglot.setLocale(locales[i]);	
+		set_locale(locales[i]);	
 		waveAmount = 20;
 		waveFrames = 100;
 		currentBgColor = choose(make_color_rgb(252, 105, 13),

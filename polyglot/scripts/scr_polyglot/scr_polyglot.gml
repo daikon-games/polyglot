@@ -19,3 +19,10 @@ function current_locale() {
 	}
 	return obj_polyglot.getLocale();
 }
+
+function set_locale(_locale) {
+	if (!instance_exists(obj_polyglot)) {
+		instance_create_depth(0, 0, 0, obj_polyglot);
+	}
+	obj_polyglot.setLocale(_locale);
+}

@@ -10,3 +10,12 @@ function str(stringKey, data = {}) {
 	}
 	return obj_polyglot._string_lookup(stringKey, data);
 }
+
+/// @function current_locale()
+/// @description Polyglot helper function. Returns the currently set locale 
+function current_locale() {
+	if (!instance_exists(obj_polyglot)) {
+		instance_create_depth(0, 0, 0, obj_polyglot);
+	}
+	return obj_polyglot.getLocale();
+}

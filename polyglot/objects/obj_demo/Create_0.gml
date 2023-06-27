@@ -19,7 +19,7 @@ bgBlendAmt = 0;
 swaps = 0;
 
 function fontSet() {
-	if (obj_polyglot.getLocale() == "kr") {
+	if (current_locale() == "kr") {
 		return fonts.kr;
 	} else {
 		return fonts.def;

@@ -1,3 +1,6 @@
+// feather ignore all
+// feather disable all
+
 /// @description Initalize Polyglot
 _currLocale = defaultLocale;
 _stringData = {};
@@ -18,7 +21,7 @@ function setLocale(locale) {
 }
 
 /// @function getLocale()
-/// @description Returns the current locale
+/// @returns {String} the current locale
 function getLocale() {
 	return _currLocale;
 }

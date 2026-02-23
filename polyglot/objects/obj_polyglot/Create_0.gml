@@ -7,6 +7,10 @@ _stringData = {};
 
 _undef = "ERROR: NO LOCALIZED STRING";
 
+// Users can override this function to allow automatically switching locales on certain conditions
+// This function should return whatever the currently-desired locale string is, as determined by the game
+_localeListener = function() { return undefined }
+
 // If another instance of polyglot already exists, destroy ourself
 if (instance_number(object_index) > 1) {
 	instance_destroy();
@@ -28,19 +32,49 @@ function getLocale() {
 
 // Internal function, reads the current locale's JSON data file into working memory
 function _loadStringData() {
-	var langFile = file_text_open_read("i18n/" + _currLocale + ".json");
-	if (langFile != -1) {
-		var data = "";
-		while (!file_text_eof(langFile)) {
-		    data += file_text_read_string(langFile);
-		    file_text_readln(langFile);
-		}
-		file_text_close(langFile);
+	var _jsonFilename = "i18n/" + _currLocale + ".json";
+	var _csvFilename = "i18n/" + _currLocale + ".csv";
+	if (file_exists(_jsonFilename)) {
+		var langFile = file_text_open_read(_jsonFilename);
+		if (langFile != -1) {
+			var data = "";
+			while (!file_text_eof(langFile)) {
+			    data += file_text_read_string(langFile);
+			    file_text_readln(langFile);
+			}
+			file_text_close(langFile);
 		
-		_stringData = json_parse(data);
-	} else {
-		throw "Language file: " + "i18n/" + _currLocale + ".json could not be read or does not exist";
+			_stringData = json_parse(data);
+			return;
+		}
+	} else if (file_exists(_csvFilename)) {
+		// Could not find a JSON file for current locale, check for CSV
+		var _csvGrid = load_csv(_csvFilename);
+		var data = {};
+		for (var g = 1; g < ds_grid_height(_csvGrid); g++) {
+			// Read every line and set the value into the appropriate struct based on the key
+			var _key = ds_grid_get(_csvGrid, 0, g);
+			var _val = ds_grid_get(_csvGrid, 1, g);
+			var _keyParts = string_split(_key, ".");
+			var _nextStruct = data;
+			for (var i = 0; i < array_length(_keyParts); i++) {
+				var _part = _keyParts[i];
+				if (i == array_length(_keyParts) - 1) {
+					// we're at the deepest level of the key, set our value:
+					struct_set(_nextStruct, _part, _val);
+				} else {
+					if (!struct_exists(_nextStruct, _part)) {
+						struct_set(_nextStruct, _part, {});
+					}
+					_nextStruct = struct_get(_nextStruct, _part);
+				}
+			}
+		}
+		ds_grid_destroy(_csvGrid);
+		_stringData = data;
+		return;
 	}
+	throw "Language file: " + "i18n/" + _currLocale + ".json could not be read or does not exist";
 }
 
 // Internal function, looks up a localized string by its key and uses the interpolation data if any

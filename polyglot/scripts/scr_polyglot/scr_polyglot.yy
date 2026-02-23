@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_polyglot",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Polyglot",
+    "path":"folders/Polyglot.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

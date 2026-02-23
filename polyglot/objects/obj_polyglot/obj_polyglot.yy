@@ -9,8 +9,8 @@
   "name":"obj_polyglot",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Polyglot",
+    "path":"folders/Polyglot.yy",
   },
   "parentObjectId":null,
   "persistent":true,

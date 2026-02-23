@@ -1,10 +1,13 @@
 {
-  "FolderOrderSettings":[],
+  "FolderOrderSettings":[
+    {"name":"Polyglot","order":1,"path":"folders/Polyglot.yy",},
+  ],
   "ResourceOrderSettings":[
     {"name":"font_demo_kr","order":2,"path":"fonts/font_demo_kr/font_demo_kr.yy",},
     {"name":"font_menu_kr","order":3,"path":"fonts/font_menu_kr/font_menu_kr.yy",},
     {"name":"font_menu","order":1,"path":"fonts/font_menu/font_menu.yy",},
     {"name":"obj_demo","order":1,"path":"objects/obj_demo/obj_demo.yy",},
+    {"name":"scr_polyglot","order":1,"path":"scripts/scr_polyglot/scr_polyglot.yy",},
     {"name":"spr_button_pressed","order":1,"path":"sprites/spr_button_pressed/spr_button_pressed.yy",},
   ],
 }
